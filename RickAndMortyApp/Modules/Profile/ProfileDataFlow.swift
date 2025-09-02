@@ -5,7 +5,7 @@ enum ProfileDataFlow {
         struct Request: Equatable {
         }
         struct ViewModelSuccess {
-            let episodes: [EpisodesViewModel]
+            let episodes: [EpisodesModel]
         }
         struct ViewModelFailure {
             let message: String

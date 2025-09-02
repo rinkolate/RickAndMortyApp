@@ -1,3 +1,3 @@
 enum ProfileItem: Hashable {
-    case episodes(EpisodesViewModel)
+    case episodes(EpisodesModel)
 }

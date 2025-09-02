@@ -4,7 +4,7 @@ import UIKit
 struct EpisodesContentConfiguration: UIContentConfiguration {
 
     // model: Это свойство типа EpisodesViewModel, которое содержит данные, необходимые для настройки отображения.
-    let model: EpisodesViewModel
+    let model: EpisodesModel
 
     // makeContentView(): Этот метод создает и возвращает объект EpisodesContentView, используя текущую конфигурацию. Он возвращает объект, который является одновременно UIView и UIContentView.
     func makeContentView() -> any UIView & UIContentView {
@@ -70,7 +70,7 @@ final class EpisodesContentView: UIView, UIContentView {
 
 private extension EpisodesContentView {
 
-    func update(with model: EpisodesViewModel) {
+    func update(with model: EpisodesModel) {
         titleLabel.text = model.name
         episodeLabel.text = model.episodeNumber + ", " + model.episodeSeason
         dateLabel.text = model.releaseDate

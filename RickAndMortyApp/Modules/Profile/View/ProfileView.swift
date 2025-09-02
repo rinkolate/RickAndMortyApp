@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 protocol DisplaysProfile: UIView {
-    func setupEpisodes(_ model: [EpisodesViewModel])
+    func setupEpisodes(_ model: [EpisodesModel])
 }
 
 final class ProfileView: UIView {
@@ -37,7 +37,7 @@ final class ProfileView: UIView {
 
 extension ProfileView: DisplaysProfile {
 
-    func setupEpisodes(_ model: [EpisodesViewModel]) {
+    func setupEpisodes(_ model: [EpisodesModel]) {
         setupSnapshot(with: model)
     }
 
@@ -72,7 +72,7 @@ private extension ProfileView {
         return dataSource
     }
 
-    func setupSnapshot(with model: [EpisodesViewModel]) {
+    func setupSnapshot(with model: [EpisodesModel]) {
         var snapshot = Snapshot()
         snapshot.appendSections([.episodes])
         let items = model.map { model in
@@ -92,8 +92,8 @@ private extension ProfileView {
         }
     }
 
-    func setupEpisodesContentConfiguration(for item: EpisodesViewModel) -> EpisodesContentConfiguration {
-        let model = EpisodesViewModel(
+    func setupEpisodesContentConfiguration(for item: EpisodesModel) -> EpisodesContentConfiguration {
+        let model = EpisodesModel(
             name: item.name,
             episodeNumber: item.episodeNumber,
             episodeSeason: item.episodeSeason,

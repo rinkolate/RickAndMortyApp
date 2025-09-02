@@ -15,7 +15,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = ProfileViewController()
+        let provider = ProfileProvider()
+        let viewController = ProfileViewController()
+        let presenter = ProfilePresenter(viewController: viewController, provider: provider)
+        viewController.presenter = presenter
+        window.rootViewController = viewController
         window.makeKeyAndVisible()
         self.window = window
     }

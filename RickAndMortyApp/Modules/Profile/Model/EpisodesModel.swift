@@ -1,4 +1,4 @@
-struct EpisodesViewModel: Hashable {
+struct EpisodesModel: Hashable {
 
     let name: String
     let episodeNumber: String
