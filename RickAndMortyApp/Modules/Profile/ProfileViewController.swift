@@ -10,6 +10,7 @@ protocol ProfileDisplayLogic: AnyObject {
 final class ProfileViewController: UIViewController {
 
     var presenter: ProfilePresentationLogic!
+    var selectedCharacter: CharacterModel?
 
     lazy var contentView: DisplaysProfile = ProfileView()
 
@@ -30,8 +31,15 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
 
         presenter.presentEpisodes(with: ProfileDataFlow.LoadEpisodes.Request())
-    }
 
+        if let character = selectedCharacter {
+            // Здесь можно загрузить реальные эпизоды для выбранного персонажа
+            // Пока используем моковые данные
+            presenter.presentEpisodes(with: ProfileDataFlow.LoadEpisodes.Request())
+        } else {
+            presenter.presentEpisodes(with: ProfileDataFlow.LoadEpisodes.Request())
+        }
+    }
 }
 
 extension ProfileViewController: ProfileDisplayLogic {

@@ -34,28 +34,28 @@ final class EpisodesContentView: UIView, UIContentView {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 17)
-        label.textColor = .white
+        label.textColor = .rickWhite
         return label
     }()
 
     private let episodeLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 13)
-        label.textColor = .green
+        label.textColor = .rickGreen
         return label
     }()
 
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12)
-        label.textColor = UIColor(red: 147/255, green: 152/255, blue: 156/255, alpha: 1.0)
+        label.textColor = .rickLightGray
         return label
     }()
 
     init(configuration: EpisodesContentConfiguration) {
         self.contentConfiguration = configuration
         super.init(frame: .zero)
-        backgroundColor = UIColor(red: 38/255, green: 42/255, blue: 56/255, alpha: 1.0)
+        backgroundColor = .rickCellBackground
         layer.cornerRadius = 16
         addSubviews()
         addConstraints()

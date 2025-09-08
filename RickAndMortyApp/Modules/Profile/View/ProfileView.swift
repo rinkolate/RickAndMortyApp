@@ -17,14 +17,14 @@ final class ProfileView: UIView {
         let episodesCollectionLayout = EpisodesCollectionLayout()
         let layout = episodesCollectionLayout.createEpisodesLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = UIColor(red: 4/255, green: 12/255, blue: 30/255, alpha: 1.0)
+        collectionView.backgroundColor = .rickDarkBlue
         collectionView.contentInset.bottom = 86
         return collectionView
     }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor(red: 4/255, green: 12/255, blue: 30/255, alpha: 1.0)
+        backgroundColor = .rickDarkBlue
         addSubviews()
         addConstraints()
     }
