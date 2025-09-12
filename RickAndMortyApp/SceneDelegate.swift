@@ -11,18 +11,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     static var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let windowScene = scene as? UIWindowScene else {
-            return
-        }
-        let window = UIWindow(windowScene: windowScene)
-        let provider = ProfileProvider()
-        let viewController = ProfileViewController()
-        let presenter = ProfilePresenter(viewController: viewController, provider: provider)
-        viewController.presenter = presenter
-        window.rootViewController = viewController
-        window.makeKeyAndVisible()
-        self.window = window
-    }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+
+                let window = UIWindow(windowScene: windowScene)
+
+                // Создаем и настраиваем контроллер списка персонажей
+                let characterViewController = CharacterViewController()
+                let navigationController = UINavigationController(rootViewController: characterViewController)
+
+                // Настраиваем navigation bar
+                navigationController.navigationBar.barTintColor = UIColor(red: 0.02, green: 0.05, blue: 0.12, alpha: 1.0)
+                navigationController.navigationBar.tintColor = .white
+                navigationController.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+                navigationController.navigationBar.barStyle = .black
+
+                characterViewController.title = "Characters"
+
+                window.rootViewController = navigationController
+                self.window = window
+                window.makeKeyAndVisible()
+            }
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.

@@ -17,16 +17,17 @@ struct ProfilePresenter {
 }
 
 extension ProfilePresenter: ProfilePresentationLogic {
-
-    func presentEpisodes(with response: ProfileDataFlow.LoadEpisodes.Request) { Task {
-        do {
-            let response = try await provider.fetchEpisodes()
-            //тут будет маппинг
-            await viewController?.displayEpisodesSuccess(with: ProfileDataFlow.LoadEpisodes.ViewModelSuccess(episodes: response))
-        } catch {
-            let errorMessage = "Error: \(error.localizedDescription)"
-            await viewController?.displayEpisodesFailure(with: ProfileDataFlow.LoadEpisodes.ViewModelFailure(message: errorMessage))
+    func presentEpisodes(with response: ProfileDataFlow.LoadEpisodes.Request) {
+        Task {
+            do {
+                let episodes = try await provider.fetchEpisodes(episodeUrls: response.episodeUrls)
+                print("ProfilePresenter: Successfully fetched \(episodes.count) episodes")
+                await viewController?.displayEpisodesSuccess(with: ProfileDataFlow.LoadEpisodes.ViewModelSuccess(episodes: episodes))
+            } catch {
+                let errorMessage = "Error: \(error.localizedDescription)"
+                print("ProfilePresenter: \(errorMessage)")
+                await viewController?.displayEpisodesFailure(with: ProfileDataFlow.LoadEpisodes.ViewModelFailure(message: errorMessage))
+            }
         }
-    }}
-
+    }
 }

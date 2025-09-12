@@ -17,14 +17,14 @@ final class ProfileView: UIView {
         let episodesCollectionLayout = EpisodesCollectionLayout()
         let layout = episodesCollectionLayout.createEpisodesLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = UIColor(red: 4/255, green: 12/255, blue: 30/255, alpha: 1.0)
+        collectionView.backgroundColor = .rickDarkBlue
         collectionView.contentInset.bottom = 86
         return collectionView
     }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor(red: 4/255, green: 12/255, blue: 30/255, alpha: 1.0)
+        backgroundColor = .rickDarkBlue
         addSubviews()
         addConstraints()
     }
@@ -36,11 +36,10 @@ final class ProfileView: UIView {
 }
 
 extension ProfileView: DisplaysProfile {
-
     func setupEpisodes(_ model: [EpisodesModel]) {
+        print("ProfileView: Setting up \(model.count) episodes")
         setupSnapshot(with: model)
     }
-
 }
 
 private extension ProfileView {
@@ -92,14 +91,8 @@ private extension ProfileView {
         }
     }
 
-    func setupEpisodesContentConfiguration(for item: EpisodesModel) -> EpisodesContentConfiguration {
-        let model = EpisodesModel(
-            name: item.name,
-            episodeNumber: item.episodeNumber,
-            episodeSeason: item.episodeSeason,
-            releaseDate: item.releaseDate
-        )
-        return EpisodesContentConfiguration(model: model)
+    private func setupEpisodesContentConfiguration(for item: EpisodesModel) -> EpisodesContentConfiguration {
+        // Просто используем переданную модель, не создаем новую
+        return EpisodesContentConfiguration(model: item)
     }
-
 }

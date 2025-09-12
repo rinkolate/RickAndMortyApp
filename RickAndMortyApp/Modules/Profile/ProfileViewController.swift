@@ -10,6 +10,7 @@ protocol ProfileDisplayLogic: AnyObject {
 final class ProfileViewController: UIViewController {
 
     var presenter: ProfilePresentationLogic!
+    var selectedCharacter: CharacterModel?
 
     lazy var contentView: DisplaysProfile = ProfileView()
 
@@ -29,17 +30,26 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        presenter.presentEpisodes(with: ProfileDataFlow.LoadEpisodes.Request())
+        if let character = selectedCharacter {
+            // Используем URLs эпизодов из выбранного персонажа
+            let request = ProfileDataFlow.LoadEpisodes.Request(episodeUrls: character.episodeUrls)
+            presenter.presentEpisodes(with: request)
+        } else {
+            displayEpisodesFailure(with: ProfileDataFlow.LoadEpisodes.ViewModelFailure(message: "No character selected"))
+        }
     }
-
 }
 
 extension ProfileViewController: ProfileDisplayLogic {
     func displayEpisodesSuccess(with viewModel: ProfileDataFlow.LoadEpisodes.ViewModelSuccess) {
+        print("ProfileViewController: Displaying \(viewModel.episodes.count) episodes")
+
         contentView.setupEpisodes(viewModel.episodes)
     }
     
     func displayEpisodesFailure(with viewModel: ProfileDataFlow.LoadEpisodes.ViewModelFailure) {
+        print("ProfileViewController: Error - \(viewModel.message)")
+
         print(viewModel.message)
     }
 
