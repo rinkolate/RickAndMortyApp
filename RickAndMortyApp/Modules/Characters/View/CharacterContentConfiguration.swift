@@ -117,26 +117,27 @@ final class CharacterContentView: UIView, UIContentView {
 
         characterImageView.image = UIImage(systemName: "person.circle.fill")
         characterImageView.tintColor = .lightGray
-        activityIndicator.startAnimating()
+//        activityIndicator.startAnimating()
+        characterImageView.setImage(from: model.image)
 
-        if let currentLoadTaskId = currentLoadTaskId {
-            ImageLoader.shared.cancelLoad(currentLoadTaskId)
-        }
-
-        currentLoadTaskId = ImageLoader.shared.loadImage(from: model.image) { [weak self] image in
-            guard let self = self else { return }
-
-            self.activityIndicator.stopAnimating()
-
-            if let image = image {
-                UIView.transition(with: self.characterImageView,
-                                duration: 0.3,
-                                options: .transitionCrossDissolve,
-                                animations: {
-                                    self.characterImageView.image = image
-                                },
-                                completion: nil)
-            }
-        }
+//        if let currentLoadTaskId = currentLoadTaskId {
+//            ImageLoader.shared.cancelLoad(currentLoadTaskId)
+//        }
+//
+//        currentLoadTaskId = ImageLoader.shared.loadImage(from: model.image) { [weak self] image in
+//            guard let self = self else { return }
+//
+//            self.activityIndicator.stopAnimating()
+//
+//            if let image = image {
+//                UIView.transition(with: self.characterImageView,
+//                                duration: 0.3,
+//                                options: .transitionCrossDissolve,
+//                                animations: {
+//                                    self.characterImageView.image = image
+//                                },
+//                                completion: nil)
+//            }
+//        }
     }
 }

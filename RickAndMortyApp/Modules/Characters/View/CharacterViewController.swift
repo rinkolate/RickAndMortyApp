@@ -29,6 +29,8 @@ final class CharacterViewController: UIViewController {
         view.backgroundColor = UIColor(red: 0.02, green: 0.05, blue: 0.12, alpha: 1.0)
         setupActivityIndicator()
         fetchCharacters()
+
+        
         setupCollectionViewSelectionHandler()
     }
 
