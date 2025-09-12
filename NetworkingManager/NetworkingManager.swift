@@ -19,8 +19,8 @@ protocol DataLoadingProtocol: AnyObject {
 
 }
 
-final class WebManager {
-    static let shared = WebManager(
+public final class WebManager: DataLoadingProtocol {
+    public static let shared = WebManager(
 //        requestFactory: RequestFactory(jsonEncoder: JSONConverterEncoder()),
      //   jsonDecoder: JSONConverterDecoder(),
         errorManager: ErrorManager(),
@@ -61,9 +61,8 @@ final class WebManager {
 //
 //}
 
-extension WebManager: DataLoadingProtocol {
-
-    func loadData(from url: URL) async throws -> Data {
+extension WebManager {
+    public func loadData(from url: URL) async throws -> Data {
         let (data, response) = try await urlSession.data(from: url)
 
         guard let httpResponse = response as? HTTPURLResponse,

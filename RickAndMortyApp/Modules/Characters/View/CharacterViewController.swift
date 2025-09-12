@@ -63,9 +63,15 @@ final class CharacterViewController: UIViewController {
 
     private func showMockData() {
         characters = [
-            CharacterModel(id: 1, name: "Rick Sanchez", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"),
-            CharacterModel(id: 2, name: "Morty Smith", image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg"),
-            CharacterModel(id: 3, name: "Summer Smith", image: "https://rickandmortyapi.com/api/character/avatar/3.jpeg")
+            CharacterModel(
+                id: 1,
+                name: "Rick Sanchez",
+                image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+                episodeUrls: [
+                    "https://rickandmortyapi.com/api/episode/1",
+                    "https://rickandmortyapi.com/api/episode/2"
+                ]
+            ),
         ]
         contentView.setupCharacters(characters)
     }
@@ -82,6 +88,8 @@ final class CharacterViewController: UIViewController {
 extension CharacterViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedCharacter = characters[indexPath.item]
+        print("Selected character: \(selectedCharacter.name)")
+
 
         // Создаем и переходим к экрану профиля
         let provider = ProfileProvider()
