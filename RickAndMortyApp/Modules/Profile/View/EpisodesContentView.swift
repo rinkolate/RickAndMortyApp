@@ -1,27 +1,19 @@
 import UIKit
 
-// EpisodesContentConfiguration: Это структура, которая реализует протокол UIContentConfiguration. Она используется для описания конфигурации содержимого, которое будет отображаться в ячейке.
 struct EpisodesContentConfiguration: UIContentConfiguration {
-
-    // model: Это свойство типа EpisodesViewModel, которое содержит данные, необходимые для настройки отображения.
     let model: EpisodesModel
 
-    // makeContentView(): Этот метод создает и возвращает объект EpisodesContentView, используя текущую конфигурацию. Он возвращает объект, который является одновременно UIView и UIContentView.
-    func makeContentView() -> any UIView & UIContentView {
+    func makeContentView() -> UIView & UIContentView {
         EpisodesContentView(configuration: self)
     }
-    // updated(for:): Этот метод возвращает обновленную конфигурацию для заданного состояния. В данном случае он просто возвращает текущую конфигурацию без изменений.
-    func updated(for state: any UIConfigurationState) -> EpisodesContentConfiguration {
+
+    func updated(for state: UIConfigurationState) -> EpisodesContentConfiguration {
         self
     }
-
 }
 
 final class EpisodesContentView: UIView, UIContentView {
-
-    // contentConfiguration: Приватное свойство, которое хранит текущую конфигурацию содержимого.
     private var contentConfiguration: EpisodesContentConfiguration
-    // configuration: Это свойство, которое реализует протокол UIContentView. Оно позволяет получить или установить конфигурацию. При установке новой конфигурации вызывается метод update(with:) для обновления отображения.
     var configuration: UIContentConfiguration {
         get { contentConfiguration }
         set {
@@ -34,55 +26,51 @@ final class EpisodesContentView: UIView, UIContentView {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 17)
-        label.textColor = .white
+        label.textColor = .rickWhite
         return label
     }()
 
     private let episodeLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 13)
-        label.textColor = .green
+        label.textColor = .rickGreen
         return label
     }()
 
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12)
-        label.textColor = UIColor(red: 147/255, green: 152/255, blue: 156/255, alpha: 1.0)
+        label.textColor = .rickLightGray
         return label
     }()
 
     init(configuration: EpisodesContentConfiguration) {
         self.contentConfiguration = configuration
         super.init(frame: .zero)
-        backgroundColor = UIColor(red: 38/255, green: 42/255, blue: 56/255, alpha: 1.0)
+        backgroundColor = .rickCellBackground
         layer.cornerRadius = 16
         addSubviews()
         addConstraints()
+        update(with: contentConfiguration.model)
     }
 
-    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-}
 
-private extension EpisodesContentView {
-
-    func update(with model: EpisodesModel) {
+    private func update(with model: EpisodesModel) {
         titleLabel.text = model.name
         episodeLabel.text = model.episodeNumber + ", " + model.episodeSeason
         dateLabel.text = model.releaseDate
     }
 
-    func addSubviews() {
+    private func addSubviews() {
         addSubview(titleLabel)
         addSubview(episodeLabel)
         addSubview(dateLabel)
     }
 
-    func addConstraints() {
+    private func addConstraints() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         episodeLabel.translatesAutoresizingMaskIntoConstraints = false
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -103,5 +91,4 @@ private extension EpisodesContentView {
             dateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
         ])
     }
-
 }

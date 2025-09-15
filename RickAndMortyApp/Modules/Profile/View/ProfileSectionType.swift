@@ -1,3 +1,4 @@
-enum ProfileSectionType: Hashable {
+enum ProfileSectionType: Int, CaseIterable {
+    case bio
     case episodes
 }
