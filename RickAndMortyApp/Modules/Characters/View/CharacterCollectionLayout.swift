@@ -1,9 +1,3 @@
-//
-//  CharacterCollectionLayout.swift
-//  RickAndMortyApp
-//
-//  Created by Toshpulatova Lola on 07.09.2025.
-//
 import UIKit
 
 
@@ -13,6 +7,7 @@ struct CharacterCollectionLayout {
             self.createSection()
         }
     }
+
     private func createSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(0.48),
@@ -40,7 +35,5 @@ struct CharacterCollectionLayout {
             trailing: 16
         )
         return section
-
     }
-
 }

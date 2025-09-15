@@ -1,10 +1,3 @@
-//
-//  CharacterView.swift
-//  RickAndMortyApp
-//
-//  Created by Toshpulatova Lola on 07.09.2025.
-//
-
 import UIKit
 
 protocol DisplaysCharacter: AnyObject {
@@ -12,18 +5,14 @@ protocol DisplaysCharacter: AnyObject {
 }
 
 final class CharacterView: UIView {
-
     typealias DataSource = UICollectionViewDiffableDataSource<CharacterSectionType, CharacterItemType>
     typealias CellRegistration = UICollectionView.CellRegistration<CharacterCell, CharacterItemType>
     typealias Snapshot = NSDiffableDataSourceSnapshot<CharacterSectionType, CharacterItemType>
 
-    // Убираем дублирование объявления collectionView
     let collectionView: UICollectionView
-
     private lazy var dataSource = setUpDataSource()
 
     override init(frame: CGRect) {
-        // Инициализируем collectionView в init
         let characterCollectionLayout = CharacterCollectionLayout()
         let layout = characterCollectionLayout.createCharacterLayout()
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -42,7 +31,6 @@ final class CharacterView: UIView {
 
     private func setupCollectionView() {
         collectionView.register(CharacterCell.self, forCellWithReuseIdentifier: "CharacterCell")
-        // Убираем установку делегата здесь, так как делегат будет установлен извне
     }
 }
 

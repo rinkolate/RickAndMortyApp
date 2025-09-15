@@ -1,14 +1,7 @@
-//
-//  UIImageView+Extension.swift
-//  RickAndMortyApp
-//
-//  Created by Toshpulatova Lola on 10.09.2025.
-//
-import NetworkingManager
 import UIKit
+import NetworkingManager
 
-public extension UIImageView {
-
+extension UIImageView {
     func setImage(from urlString: String) {
         guard let url = URL(string: urlString) else {
             assertionFailure("Invalid URL: \(urlString)")
@@ -24,7 +17,6 @@ public extension UIImageView {
             }
         }
     }
-    
 }
 
 

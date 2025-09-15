@@ -1,10 +1,13 @@
+import Foundation
+import NetworkingManager
+
 struct EpisodesModel: Hashable {
     let name: String
     let episodeNumber: String
     let episodeSeason: String
     let releaseDate: String
 
-    init(from episode: Episode) {
+    init(from episode: WebDTO.Episode) {
         self.name = episode.name
 
         // Разбираем код эпизода (например, "S01E01")
@@ -17,8 +20,6 @@ struct EpisodesModel: Hashable {
             self.episodeSeason = episode.episode
             self.episodeNumber = ""
         }
-        self.releaseDate = episode.air_date
-        print("Created EpisodesModel: \(self.name), \(self.episodeSeason), \(self.episodeNumber), \(self.releaseDate)")
-
+        self.releaseDate = episode.airDate
     }
 }

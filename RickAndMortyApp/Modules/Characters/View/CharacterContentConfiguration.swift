@@ -1,9 +1,3 @@
-//
-//  CharacterContentConfiguration.swift
-//  RickAndMortyApp
-//
-//  Created by Toshpulatova Lola on 07.09.2025.
-//
 import UIKit
 
 struct CharacterContentConfiguration: UIContentConfiguration {
@@ -25,8 +19,6 @@ final class CharacterContentView: UIView, UIContentView {
             update(with: newConfiguration.model)
         }
     }
-
-    private var currentLoadTaskId: String?
 
     private let containerView: UIView = {
         let view = UIView()
@@ -54,13 +46,6 @@ final class CharacterContentView: UIView, UIContentView {
         return label
     }()
 
-    private let activityIndicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(style: .medium)
-        indicator.color = .white
-        indicator.hidesWhenStopped = true
-        return indicator
-    }()
-
     init(configuration: CharacterContentConfiguration) {
         self.configuration = configuration
         super.init(frame: .zero)
@@ -82,14 +67,12 @@ final class CharacterContentView: UIView, UIContentView {
         addSubview(containerView)
         containerView.addSubview(characterImageView)
         containerView.addSubview(titleLabel)
-        containerView.addSubview(activityIndicator)
     }
 
     private func addConstraints() {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         characterImageView.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
@@ -105,39 +88,12 @@ final class CharacterContentView: UIView, UIContentView {
             titleLabel.topAnchor.constraint(equalTo: characterImageView.bottomAnchor, constant: 8),
             titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8),
             titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -8),
-            titleLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12),
-
-            activityIndicator.centerXAnchor.constraint(equalTo: characterImageView.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: characterImageView.centerYAnchor)
+            titleLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12)
         ])
     }
 
     func update(with model: CharacterModel) {
         titleLabel.text = model.name
-
-        characterImageView.image = UIImage(systemName: "person.circle.fill")
-        characterImageView.tintColor = .lightGray
-//        activityIndicator.startAnimating()
         characterImageView.setImage(from: model.image)
-
-//        if let currentLoadTaskId = currentLoadTaskId {
-//            ImageLoader.shared.cancelLoad(currentLoadTaskId)
-//        }
-//
-//        currentLoadTaskId = ImageLoader.shared.loadImage(from: model.image) { [weak self] image in
-//            guard let self = self else { return }
-//
-//            self.activityIndicator.stopAnimating()
-//
-//            if let image = image {
-//                UIView.transition(with: self.characterImageView,
-//                                duration: 0.3,
-//                                options: .transitionCrossDissolve,
-//                                animations: {
-//                                    self.characterImageView.image = image
-//                                },
-//                                completion: nil)
-//            }
-//        }
     }
 }

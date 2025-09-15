@@ -45,7 +45,7 @@ private extension ErrorManager {
     func parseBackendError(_ data: Data) -> WebDTO.BackendErrorResponse? {
         do {
             let jsonDecoder = JSONConverterDecoder()
-            return try jsonDecoder.decode(WebDTO.BackendErrorResponse.self, data)
+            return try jsonDecoder.decode(WebDTO.BackendErrorResponse.self, from: data)
         } catch {
             return nil
         }

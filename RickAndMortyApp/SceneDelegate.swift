@@ -1,5 +1,5 @@
-//
 import UIKit
+import NetworkingManager
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -13,24 +13,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-                let window = UIWindow(windowScene: windowScene)
+        let window = UIWindow(windowScene: windowScene)
 
-                // Создаем и настраиваем контроллер списка персонажей
-                let characterViewController = CharacterViewController()
-                let navigationController = UINavigationController(rootViewController: characterViewController)
+        // Создаем зависимости для экрана персонажей
+        let characterService = CharacterService()
+        let characterProvider = CharacterProvider(service: characterService)
+        let characterViewController = CharacterViewController()
+        let characterPresenter = CharacterPresenter(viewController: characterViewController, provider: characterProvider)
+        characterViewController.presenter = characterPresenter
 
-                // Настраиваем navigation bar
-                navigationController.navigationBar.barTintColor = UIColor(red: 0.02, green: 0.05, blue: 0.12, alpha: 1.0)
-                navigationController.navigationBar.tintColor = .white
-                navigationController.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
-                navigationController.navigationBar.barStyle = .black
+        let navigationController = UINavigationController(rootViewController: characterViewController)
+        navigationController.navigationBar.barTintColor = UIColor(red: 0.02, green: 0.05, blue: 0.12, alpha: 1.0)
+        navigationController.navigationBar.tintColor = .white
+        navigationController.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navigationController.navigationBar.barStyle = .black
 
-                characterViewController.title = "Characters"
+        characterViewController.title = "Characters"
 
-                window.rootViewController = navigationController
-                self.window = window
-                window.makeKeyAndVisible()
-            }
+        window.rootViewController = navigationController
+        self.window = window
+        window.makeKeyAndVisible()
+    }
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.

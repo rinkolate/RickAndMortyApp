@@ -1,23 +1,20 @@
-
+import NetworkingManager
+import Foundation
 
 protocol ProvidesProfile {
     func fetchEpisodes(episodeUrls: [String]) async throws -> [EpisodesModel]
 }
 
 struct ProfileProvider: ProvidesProfile {
+    let service: EpisodeServiceProtocol
+
     func fetchEpisodes(episodeUrls: [String]) async throws -> [EpisodesModel] {
-        return try await withCheckedThrowingContinuation { continuation in
-            NetworkService.shared.fetchEpisodes(urls: episodeUrls) { result in
-                switch result {
-                case .success(let episodes):
-                    let models = episodes.map { EpisodesModel(from: $0) }
-                    print("ProfileProvider: Successfully created \(models.count) episode models")
-                    continuation.resume(returning: models)
-                case .failure(let error):
-                    print("ProfileProvider: Error - \(error)")
-                    continuation.resume(throwing: error)
-                }
-            }
+        var episodes: [EpisodesModel] = []
+        for url in episodeUrls {
+            let episode = try await service.getEpisode(url: url)
+            episodes.append(EpisodesModel(from: episode))
         }
+        return episodes
     }
 }
+

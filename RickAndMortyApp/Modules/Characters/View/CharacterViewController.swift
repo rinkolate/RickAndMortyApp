@@ -1,24 +1,16 @@
-//
-//  CharacterViewController.swift
-//  RickAndMortyApp
-//
-//  Created by Toshpulatova Lola on 07.09.2025.
-//
 import UIKit
+import NetworkingManager
 
-final class CharacterViewController: UIViewController {
+protocol CharacterDisplayLogic: AnyObject {
+    func displayCharacters(_ characters: [CharacterModel])
+    func displayError(_ message: String)
+}
 
+final class CharacterViewController: UIViewController, CharacterDisplayLogic {
+    var presenter: CharacterPresentationLogic?
     lazy var contentView: DisplaysCharacter = CharacterView()
     private var characters: [CharacterModel] = []
     private let activityIndicator = UIActivityIndicatorView(style: .large)
-
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 
     override func loadView() {
         view = contentView as? UIView
@@ -28,10 +20,8 @@ final class CharacterViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 0.02, green: 0.05, blue: 0.12, alpha: 1.0)
         setupActivityIndicator()
-        fetchCharacters()
-
-        
         setupCollectionViewSelectionHandler()
+        presenter?.presentCharacters()
     }
 
     private func setupActivityIndicator() {
@@ -42,77 +32,39 @@ final class CharacterViewController: UIViewController {
         activityIndicator.startAnimating()
     }
 
-    private func fetchCharacters() {
-        activityIndicator.startAnimating()
-
-        NetworkService.shared.fetchCharacters { [weak self] result in
-            DispatchQueue.main.async {
-                self?.activityIndicator.stopAnimating()
-
-                switch result {
-                case .success(let characters):
-                    self?.characters = characters.map { CharacterModel(from: $0) }
-                    self?.contentView.setupCharacters(self?.characters ?? [])
-                case .failure(let error):
-                    print("Error fetching characters: \(error.localizedDescription)")
-                    self?.showMockData()
-                }
-            }
-        }
-    }
-
-    private func showMockData() {
-        characters = [
-            CharacterModel(
-                id: 1,
-                name: "Rick Sanchez",
-                image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-                episodeUrls: [
-                    "https://rickandmortyapi.com/api/episode/1",
-                    "https://rickandmortyapi.com/api/episode/2"
-                ]
-            ),
-        ]
+    func displayCharacters(_ characters: [CharacterModel]) {
+        activityIndicator.stopAnimating()
+        self.characters = characters
         contentView.setupCharacters(characters)
     }
 
+    func displayError(_ message: String) {
+        activityIndicator.stopAnimating()
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+
     private func setupCollectionViewSelectionHandler() {
-        // Получаем доступ к коллекции через contentView
         if let characterView = contentView as? CharacterView {
             characterView.collectionView.delegate = self
         }
     }
 }
 
-// Добавляем соответствие протоколу в extension
 extension CharacterViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedCharacter = characters[indexPath.item]
-        print("Selected character: \(selectedCharacter.name)")
 
-
-        // Создаем и переходим к экрану профиля
-        let provider = ProfileProvider()
+        let episodeService = EpisodeService()
+        let profileProvider = ProfileProvider(service: episodeService)
         let profileViewController = ProfileViewController()
-        let presenter = ProfilePresenter(viewController: profileViewController, provider: provider)
-        profileViewController.presenter = presenter
-
-        // Передаем выбранного персонажа
+        let profilePresenter = ProfilePresenter(viewController: profileViewController, provider: profileProvider)
+        profileViewController.presenter = profilePresenter
         profileViewController.selectedCharacter = selectedCharacter
-
-        // Устанавливаем заголовок с именем персонажа
         profileViewController.title = selectedCharacter.name
 
-        // Переходим к экрану профиля
         navigationController?.pushViewController(profileViewController, animated: true)
-
-        // Снимаем выделение с ячейки
         collectionView.deselectItem(at: indexPath, animated: true)
-    }
-}
-
-extension CharacterViewController: DisplaysCharacter {
-    func setupCharacters(_ model: [CharacterModel]) {
-        // Реализация протокола
     }
 }

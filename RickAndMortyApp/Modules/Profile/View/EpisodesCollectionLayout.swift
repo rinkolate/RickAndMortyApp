@@ -1,25 +1,13 @@
-//
-//  EpisodesCollectionLayout.swift
-//  RickAndMortyApp
-//
-//  Created by Mitina Ekaterina on 19.08.2025.
-//
-
 import UIKit
 
 struct EpisodesCollectionLayout {
-
     func createEpisodesLayout() -> UICollectionViewLayout {
         UICollectionViewCompositionalLayout { _, _ -> NSCollectionLayoutSection? in
             self.createSection()
         }
     }
 
-}
-
-private extension EpisodesCollectionLayout {
-
-    func createSection() -> NSCollectionLayoutSection {
+    private func createSection() -> NSCollectionLayoutSection {
         let fractionalWidth: CGFloat = 1.0
         let absoluteHeight: CGFloat = 86
 
@@ -44,15 +32,14 @@ private extension EpisodesCollectionLayout {
 
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(
-            top: padding,
+            top: 16, // Отступ сверху 16 для Episodes
             leading: padding,
             bottom: padding,
             trailing: padding
         )
-        section.interGroupSpacing =  padding
+        section.interGroupSpacing = padding
         section.orthogonalScrollingBehavior = .none
 
         return section
     }
-
 }
