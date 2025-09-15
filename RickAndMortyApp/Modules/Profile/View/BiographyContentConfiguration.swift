@@ -232,8 +232,8 @@ final class BiographyContentView: UIView, UIContentView {
             infoTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
 
             infoContainer.topAnchor.constraint(equalTo: infoTitleLabel.bottomAnchor, constant: 12),
-			infoContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-			infoContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+			infoContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
+			infoContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
 			infoContainer.heightAnchor.constraint(equalToConstant: 124),
 
             speciesTitleLabel.topAnchor.constraint(equalTo: infoContainer.topAnchor, constant: 16),
@@ -256,8 +256,8 @@ final class BiographyContentView: UIView, UIContentView {
             originTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
 
             originContainer.topAnchor.constraint(equalTo: originTitleLabel.bottomAnchor, constant: 12),
-			originContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-			originContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+			originContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
+			originContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
 			originContainer.heightAnchor.constraint(equalToConstant: 80),
 			originContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -24),
 
