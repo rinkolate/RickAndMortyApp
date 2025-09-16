@@ -1,10 +1,13 @@
 import Foundation
 
 public protocol CharacterServiceProtocol {
+
     func getCharacters() async throws -> WebDTO.CharactersResponse
+
 }
 
 public struct CharacterService: CharacterServiceProtocol {
+
     private let webManager: WebManagerProtocol
 
     public init() {

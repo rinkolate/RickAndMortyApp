@@ -15,7 +15,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let window = UIWindow(windowScene: windowScene)
 
-        // Создаем зависимости для экрана персонажей
         let characterService = CharacterService()
         let characterProvider = CharacterProvider(service: characterService)
         let characterViewController = CharacterViewController()

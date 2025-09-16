@@ -8,7 +8,7 @@ enum WebEnvironment {
     case dev
 
     var apiBaseURL: String {
-        switch self {
+        switch WebEnvironment.current {
         case .production, .test, .dev:
             return "https://rickandmortyapi.com"
         }
