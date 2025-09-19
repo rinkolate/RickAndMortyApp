@@ -31,6 +31,7 @@ final class CharacterViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        contentView.setupLoader(true)
         presenter.presentCharacters(with: CharacterDataFlow.LoadCharacters.Request())
     }
 
@@ -39,10 +40,12 @@ final class CharacterViewController: UIViewController {
 
 extension CharacterViewController: CharacterDisplayLogic {
     func displayCharactersSuccess(with viewModel: CharacterDataFlow.LoadCharacters.ViewModelSuccess) {
+        contentView.setupLoader(false)
         contentView.setupCharacters(viewModel.characters)
     }
 
     func displayCharactersFailure(with viewModel: CharacterDataFlow.LoadCharacters.ViewModelFailure) {
+        contentView.setupLoader(false)
         print(viewModel.message)
     }
 

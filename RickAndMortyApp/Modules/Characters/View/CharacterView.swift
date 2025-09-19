@@ -3,7 +3,8 @@ import UIKit
 protocol DisplaysCharacter: UIView {
 
     func setupCharacters(_ model: [CharacterModel])
-    
+    func setupLoader(_ isEnabled: Bool)
+
 }
 
 final class CharacterView: UIView {
@@ -20,6 +21,13 @@ final class CharacterView: UIView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         return collectionView
+    }()
+
+    let activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.color = .rickWhite
+        activityIndicator.hidesWhenStopped = true
+        return activityIndicator
     }()
 
     override init(frame: CGRect) {
@@ -42,22 +50,35 @@ extension CharacterView: DisplaysCharacter {
         setupSnapshot(with: model)
     }
 
+    func setupLoader(_ isEnabled: Bool) {
+        if isEnabled {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
+    }
+
 }
 
 private extension CharacterView {
 
     func addSubviews() {
         addSubview(collectionView)
+        addSubview(activityIndicator)
     }
 
     func addConstraints() {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+            activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
 
