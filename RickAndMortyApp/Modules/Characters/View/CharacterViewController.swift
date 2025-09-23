@@ -27,6 +27,7 @@ final class CharacterViewController: UIViewController {
 
     override func loadView() {
         view = contentView
+        contentView.viewDelegate = self
     }
 
     override func viewDidLoad() {
@@ -44,6 +45,21 @@ extension CharacterViewController: CharacterDisplayLogic {
 
     func displayCharactersFailure(with viewModel: CharacterDataFlow.LoadCharacters.ViewModelFailure) {
         print(viewModel.message)
+    }
+
+}
+
+extension CharacterViewController: CharacterViewDelegate {
+
+    func didSelectCharacter(_ id: Int) {
+        let service = ProfileService()
+        let provider = ProfileProvider(service: service)
+        let viewController = ProfileViewController()
+        let presenter = ProfilePresenter(viewController: viewController, provider: provider)
+        viewController.presenter = presenter
+        viewController.context = id
+
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
 }

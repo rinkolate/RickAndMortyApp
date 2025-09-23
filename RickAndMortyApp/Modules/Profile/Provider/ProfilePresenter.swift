@@ -1,7 +1,7 @@
 import Foundation
 
 protocol ProfilePresentationLogic {
-    func presentProfile(character: CharacterModel)
+    func presentProfile(by viewModel: ProfileDataFlow.LoadProfile.Request)
 }
 
 final class ProfilePresenter {
@@ -15,19 +15,26 @@ final class ProfilePresenter {
 }
 
 extension ProfilePresenter: ProfilePresentationLogic {
-    func presentProfile(character: CharacterModel) {
+    func presentProfile(by viewModel: ProfileDataFlow.LoadProfile.Request) {
         Task {
             do {
-                let episodes = try await provider.fetchEpisodes(episodeUrls: character.episodeUrls)
-                let biography = BiographyModel(from: character)
-
-                await MainActor.run {
-                    viewController?.displayProfile(biography: biography, episodes: episodes)
+                guard let id = viewModel.id else {
+                    return
                 }
+                let profile = try await provider.fetchProfile(by: id)
+                let biography = BiographyModel(
+                    photo: profile.image,
+                    name: profile.name,
+                    status: profile.status,
+                    species: profile.species,
+                    type: profile.type,
+                    gender: profile.gender,
+                    origin: profile.origin.name
+                )
+                await viewController?.displayProfileSuccess(with: ProfileDataFlow.LoadProfile.ViewModelSuccess(biography: biography))
             } catch {
-                await MainActor.run {
-                    viewController?.displayError(error.localizedDescription)
-                }
+                let errorMessage = "Error: \(error.localizedDescription)"
+                await viewController?.displayProfileFailure(with: ProfileDataFlow.LoadProfile.ViewModelFailure(message: errorMessage))
             }
         }
     }

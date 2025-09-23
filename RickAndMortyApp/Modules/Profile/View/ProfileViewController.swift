@@ -1,14 +1,17 @@
 import UIKit
 
 protocol ProfileDisplayLogic: AnyObject {
-    func displayProfile(biography: BiographyModel, episodes: [EpisodesModel])
-    func displayError(_ message: String)
+    @MainActor
+    func displayProfileSuccess(with viewModel: ProfileDataFlow.LoadProfile.ViewModelSuccess)
+    @MainActor
+    func displayProfileFailure(with viewModel: ProfileDataFlow.LoadProfile.ViewModelFailure)
 }
 
-final class ProfileViewController: UIViewController, ProfileDisplayLogic {
-    var presenter: ProfilePresentationLogic?
-    var selectedCharacter: CharacterModel?
+final class ProfileViewController: UIViewController {
+
     lazy var contentView: DisplaysProfile = ProfileView()
+    var presenter: ProfilePresentationLogic?
+    var context: Int?
 
     override func loadView() {
         view = contentView
@@ -16,21 +19,20 @@ final class ProfileViewController: UIViewController, ProfileDisplayLogic {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        if let character = selectedCharacter {
-            presenter?.presentProfile(character: character)
-        } else {
-            displayError("No character selected")
-        }
+        presenter?.presentProfile(by: ProfileDataFlow.LoadProfile.Request(id: context))
     }
 
-    func displayProfile(biography: BiographyModel, episodes: [EpisodesModel]) {
-        contentView.setupProfile(bio: biography, episodes: episodes)
-    }
+}
 
-    func displayError(_ message: String) {
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
+extension ProfileViewController: ProfileDisplayLogic {
+    func displayProfileSuccess(with viewModel: ProfileDataFlow.LoadProfile.ViewModelSuccess) {
+        contentView.setupProfile(bio: viewModel.biography, episodes: array)
+    }
+    
+    func displayProfileFailure(with viewModel: ProfileDataFlow.LoadProfile.ViewModelFailure) {
+        print(viewModel.message)
     }
 }
+
+let array: [EpisodesModel] = []
+

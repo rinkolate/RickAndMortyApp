@@ -2,8 +2,13 @@ import UIKit
 
 protocol DisplaysCharacter: UIView {
 
+    var viewDelegate: CharacterViewDelegate? { get set }
     func setupCharacters(_ model: [CharacterModel])
     
+}
+
+protocol CharacterViewDelegate: AnyObject {
+    func didSelectCharacter(_ id: Int)
 }
 
 final class CharacterView: UIView {
@@ -12,7 +17,10 @@ final class CharacterView: UIView {
     typealias CellRegistration = UICollectionView.CellRegistration<UICollectionViewCell, CharacterItemType>
     typealias Snapshot = NSDiffableDataSourceSnapshot<CharacterSectionType, CharacterItemType>
 
+    weak var viewDelegate: CharacterViewDelegate?
+
     private lazy var dataSource = setupDataSource()
+    private var characters: [CharacterModel] = []
 
     let collectionView: UICollectionView = {
         let characterCollectionLayout = CharacterCollectionLayout()
@@ -25,6 +33,7 @@ final class CharacterView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .rickDarkBlue
+        collectionView.delegate = self
         addSubviews()
         addConstraints()
     }
@@ -39,6 +48,7 @@ final class CharacterView: UIView {
 extension CharacterView: DisplaysCharacter {
 
     func setupCharacters(_ model: [CharacterModel]) {
+        self.characters += model
         setupSnapshot(with: model)
     }
 
@@ -108,3 +118,11 @@ private extension CharacterView {
 
 }
 
+extension CharacterView: UICollectionViewDelegate {
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let id = self.characters[indexPath.row].id
+        viewDelegate?.didSelectCharacter(id)
+    }
+
+}
