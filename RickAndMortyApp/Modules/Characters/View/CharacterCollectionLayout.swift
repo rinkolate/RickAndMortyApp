@@ -1,6 +1,5 @@
 import UIKit
 
-
 struct CharacterCollectionLayout {
     func createCharacterLayout() -> UICollectionViewLayout {
         UICollectionViewCompositionalLayout { _, _ -> NSCollectionLayoutSection in
@@ -8,9 +7,10 @@ struct CharacterCollectionLayout {
         }
     }
 
+
     private func createSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(0.48),
+            widthDimension: .fractionalWidth(1.0),
             heightDimension: .estimated(200)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -22,18 +22,22 @@ struct CharacterCollectionLayout {
 
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize,
-            subitems: [item]
+            subitem: item,
+            count: 2
         )
+
         group.interItemSpacing = .fixed(16)
 
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 16
-        section.contentInsets = .init(
+
+        section.contentInsets = NSDirectionalEdgeInsets(
             top: 20,
             leading: 16,
             bottom: 20,
             trailing: 16
         )
+
         return section
     }
 }

@@ -32,7 +32,7 @@ struct EpisodesCollectionLayout {
 
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(
-            top: 16, // Отступ сверху 16 для Episodes
+            top: 16, 
             leading: padding,
             bottom: padding,
             trailing: padding

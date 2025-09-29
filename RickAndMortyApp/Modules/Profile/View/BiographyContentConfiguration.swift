@@ -133,7 +133,7 @@ final class BiographyContentView: UIView, UIContentView {
 
     private let planetContainer: UIView = {
             let view = UIView()
-            view.backgroundColor = .rickDarkBlue
+            view.backgroundColor = .rickPlanetBackground
             view.layer.cornerRadius = 10
             return view
         }()
@@ -162,7 +162,7 @@ final class BiographyContentView: UIView, UIContentView {
     init(configuration: BiographyContentConfiguration) {
         self.contentConfiguration = configuration
         super.init(frame: .zero)
-        backgroundColor = .clear // Прозрачный фон
+        backgroundColor = .clear 
         setupViews()
         addSubviews()
         addConstraints()
@@ -174,7 +174,6 @@ final class BiographyContentView: UIView, UIContentView {
     }
 
     private func setupViews() {
-        // Никакой дополнительной настройки не нужно, все элементы прозрачные
     }
 
     private func addSubviews() {
@@ -226,7 +225,7 @@ final class BiographyContentView: UIView, UIContentView {
         NSLayoutConstraint.activate(
 [
             // Avatar, name and status
-            avatarImageView.topAnchor.constraint(equalTo: topAnchor, constant: 20),
+            avatarImageView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             avatarImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             avatarImageView.widthAnchor.constraint(equalToConstant: 148),
             avatarImageView.heightAnchor.constraint(equalToConstant: 148),
@@ -234,7 +233,7 @@ final class BiographyContentView: UIView, UIContentView {
             nameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 16),
             nameLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
 
-            statusLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
+            statusLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: -16),
             statusLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
 
             // Info section
