@@ -5,15 +5,17 @@ enum ProfileDataFlow {
         struct Request: Equatable {
             let id: Int?
         }
+
         struct ViewModelSuccess {
             let biography: BiographyModel
+            let episodes: [EpisodesModel]
         }
+
         struct ViewModelFailure {
             let message: String
         }
     }
 }
-
 //enum ProfileDataFlow {
 //    enum LoadEpisodes {
 //        struct Request: Equatable {
