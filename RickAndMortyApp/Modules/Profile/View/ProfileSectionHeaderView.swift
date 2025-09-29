@@ -12,6 +12,8 @@ final class ProfileSectionHeaderView: UICollectionReusableView {
         super.init(frame: frame)
         addSubview(label)
         setupConstraints()
+//        label.backgroundColor = .red
+//        backgroundColor = .green
     }
 
     required init?(coder: NSCoder) {
@@ -25,9 +27,9 @@ final class ProfileSectionHeaderView: UICollectionReusableView {
     private func setupConstraints() {
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
             label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
-            label.topAnchor.constraint(equalTo: topAnchor, constant: -16),
+            label.topAnchor.constraint(equalTo: topAnchor, constant: 0),
             label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0)
         ])
     }

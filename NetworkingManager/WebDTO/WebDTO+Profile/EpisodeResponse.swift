@@ -18,7 +18,7 @@ public extension WebDTO {
        public let airDate: String
        public let episode: String
        public let characters: [String]
-       public let url: String
+       public let url: String //берем название эпизода и открываем поиск в вквидео с название серии, добавить в ячейку коллекции эпизодов стрелочку ТИПА ССЫЛКа https://vkvideo.ru/?q=НАЗВАНИЕ + написать Артуру по поводу ментора + отправить ему ссылку на апи рика и морти
        public let created: String
 
         enum CodingKeys: String, CodingKey {

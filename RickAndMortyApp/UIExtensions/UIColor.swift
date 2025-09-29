@@ -6,6 +6,7 @@ extension UIColor {
     static let rickGreen = UIColor(red: 71/255, green: 198/255, blue: 11/255, alpha: 1.0)
     static let rickLightGray = UIColor(red: 147/255, green: 152/255, blue: 156/255, alpha: 1.0)
     static let rickWhite = UIColor.white
+    static let rickPlanetBackground = UIColor(red: 25/255, green: 28/255, blue: 42/255, alpha: 1.0)
 }
 
 extension UIFont {

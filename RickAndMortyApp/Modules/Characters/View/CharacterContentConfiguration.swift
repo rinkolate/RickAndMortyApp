@@ -80,15 +80,15 @@ final class CharacterContentView: UIView, UIContentView {
             containerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4),
             containerView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4),
 
-            characterImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
-            characterImageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
-            characterImageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12),
+            characterImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 8),
+            characterImageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8),
+            characterImageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -8),
             characterImageView.heightAnchor.constraint(equalTo: characterImageView.widthAnchor),
 
-            titleLabel.topAnchor.constraint(equalTo: characterImageView.bottomAnchor, constant: 8),
+            titleLabel.topAnchor.constraint(equalTo: characterImageView.bottomAnchor, constant: 16),
             titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8),
             titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -8),
-            titleLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12)
+            titleLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -16)
         ])
     }
 
