@@ -131,9 +131,16 @@ final class BiographyContentView: UIView, UIContentView {
         return view
     }()
 
+    private let planetContainer: UIView = {
+            let view = UIView()
+            view.backgroundColor = .rickDarkBlue
+            view.layer.cornerRadius = 10
+            return view
+        }()
+
     private let planetImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "planet_icon") // Добавь иконку планеты в assets
+        imageView.image = UIImage(named: "planet_icon")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -189,6 +196,7 @@ final class BiographyContentView: UIView, UIContentView {
         // Origin section
         addSubview(originTitleLabel)
         addSubview(originContainer)
+        originContainer.addSubview(planetContainer)
         originContainer.addSubview(planetImageView)
         originContainer.addSubview(originNameLabel)
         originContainer.addSubview(originTypeLabel)
@@ -198,6 +206,7 @@ final class BiographyContentView: UIView, UIContentView {
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
+        planetContainer.translatesAutoresizingMaskIntoConstraints = false
 
         infoTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         infoContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -214,7 +223,8 @@ final class BiographyContentView: UIView, UIContentView {
         originNameLabel.translatesAutoresizingMaskIntoConstraints = false
         originTypeLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        NSLayoutConstraint.activate([
+        NSLayoutConstraint.activate(
+[
             // Avatar, name and status
             avatarImageView.topAnchor.constraint(equalTo: topAnchor, constant: 20),
             avatarImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
@@ -261,17 +271,23 @@ final class BiographyContentView: UIView, UIContentView {
 			originContainer.heightAnchor.constraint(equalToConstant: 80),
 			originContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -24),
 
-            planetImageView.centerYAnchor.constraint(equalTo: originContainer.centerYAnchor),
-            planetImageView.leadingAnchor.constraint(equalTo: originContainer.leadingAnchor, constant: 16),
+            planetContainer.leadingAnchor.constraint(equalTo: originContainer.leadingAnchor,constant: 8),
+            planetContainer.centerYAnchor.constraint(equalTo: originContainer.centerYAnchor),
+            planetContainer.widthAnchor.constraint(equalToConstant: 64),
+            planetContainer.heightAnchor.constraint(equalToConstant: 64),
+
+            planetImageView.centerYAnchor.constraint(equalTo: planetContainer.centerYAnchor),
+            planetImageView.leadingAnchor.constraint(equalTo: planetContainer.leadingAnchor, constant: 20),
             planetImageView.widthAnchor.constraint(equalToConstant: 24),
             planetImageView.heightAnchor.constraint(equalToConstant: 24),
 
             originNameLabel.topAnchor.constraint(equalTo: originContainer.topAnchor, constant: 16),
-            originNameLabel.leadingAnchor.constraint(equalTo: planetImageView.trailingAnchor, constant: 16),
+            originNameLabel.leadingAnchor.constraint(equalTo: planetContainer.trailingAnchor, constant: 16),
 
             originTypeLabel.topAnchor.constraint(equalTo: originNameLabel.bottomAnchor, constant: 4),
-            originTypeLabel.leadingAnchor.constraint(equalTo: planetImageView.trailingAnchor, constant: 16),
-        ])
+            originTypeLabel.leadingAnchor.constraint(equalTo: planetContainer.trailingAnchor, constant: 16),
+        ]
+)
     }
 
     private func update(with model: BiographyModel) {
@@ -288,6 +304,7 @@ final class BiographyContentView: UIView, UIContentView {
 
         // Origin section
         originNameLabel.text = model.origin
-        originTypeLabel.text = "Planet" // Это статический текст, как в Figma
+        originTypeLabel.text = "Planet"
+        originTypeLabel.textColor = .rickGreen
     }
 }
