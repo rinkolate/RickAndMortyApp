@@ -45,15 +45,15 @@ private extension ProfileView {
     }
 
     func addConstraints() {
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
+            collectionView.translatesAutoresizingMaskIntoConstraints = false
 
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
-        ])
-    }
+            NSLayoutConstraint.activate([
+                collectionView.topAnchor.constraint(equalTo: topAnchor),
+                collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
+                collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
+                collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            ])
+        }
 
     func setupDataSource() -> DataSource {
         let cellRegistration = createCellRegistration()
@@ -94,7 +94,7 @@ private extension ProfileView {
                 return nil
             case .episodes:
                 return "Episodes"
-        }
+            }
     }
 
     func setupSnapshot(with biography: BiographyModel, episodes: [EpisodesModel]) {

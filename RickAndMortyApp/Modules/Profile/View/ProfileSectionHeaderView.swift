@@ -3,7 +3,7 @@ import UIKit
 final class ProfileSectionHeaderView: UICollectionReusableView {
     private let label: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 17, weight: .semibold)
+        label.font = .gilroySemiBold(size: 17)
         label.textColor = .rickWhite
         return label
     }()
@@ -25,9 +25,10 @@ final class ProfileSectionHeaderView: UICollectionReusableView {
     private func setupConstraints() {
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8) 
+            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
+            label.topAnchor.constraint(equalTo: topAnchor, constant: -16),
+            label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0)
         ])
     }
 }
