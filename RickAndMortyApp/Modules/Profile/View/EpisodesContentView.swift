@@ -2,6 +2,7 @@ import UIKit
 
 struct EpisodesContentConfiguration: UIContentConfiguration {
     let model: EpisodesModel
+    var onButtonTap: (() -> Void)? 
 
     func makeContentView() -> UIView & UIContentView {
         EpisodesContentView(configuration: self)
@@ -44,6 +45,15 @@ final class EpisodesContentView: UIView, UIContentView {
         return label
     }()
 
+    private let actionButton: UIButton = {
+        let button = UIButton(type: .system)
+        let arrowImage = UIImage(systemName: "arrow.up.forward.app")?
+            .withConfiguration(UIImage.SymbolConfiguration(scale: .small));        button.setImage(arrowImage, for: .normal)
+        button.tintColor = .rickWhite
+        button.backgroundColor = .rickCellBackground
+        return button
+    }()
+
     init(configuration: EpisodesContentConfiguration) {
         self.contentConfiguration = configuration
         super.init(frame: .zero)
@@ -51,6 +61,7 @@ final class EpisodesContentView: UIView, UIContentView {
         layer.cornerRadius = 16
         addSubviews()
         addConstraints()
+        setupButtonAction()
         update(with: contentConfiguration.model)
     }
 
@@ -68,27 +79,39 @@ final class EpisodesContentView: UIView, UIContentView {
         addSubview(titleLabel)
         addSubview(episodeLabel)
         addSubview(dateLabel)
+        addSubview(actionButton)
     }
 
     private func addConstraints() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         episodeLabel.translatesAutoresizingMaskIntoConstraints = false
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
+        actionButton.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: topAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -32),
+            actionButton.topAnchor.constraint(equalTo: topAnchor, constant: 12),
+            actionButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
+            actionButton.widthAnchor.constraint(equalToConstant: 20),
+            actionButton.heightAnchor.constraint(equalToConstant: 20),
 
-            episodeLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            titleLabel.trailingAnchor.constraint(equalTo: actionButton.leadingAnchor, constant: -8),
+
+            episodeLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
             episodeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             episodeLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            episodeLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -14),
 
-            dateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
-            dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            dateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
+            dateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+            dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
+    }
+
+    private func setupButtonAction() {
+        actionButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+    }
+
+    @objc private func buttonTapped() {
+        contentConfiguration.onButtonTap?()
     }
 }

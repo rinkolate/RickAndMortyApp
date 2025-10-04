@@ -21,6 +21,8 @@ final class ProfileView: UIView {
         return collectionView
     }()
 
+    var onEpisodeTap: ((String) -> Void)?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .rickDarkBlue
@@ -111,16 +113,20 @@ private extension ProfileView {
     }
 
     func createCellRegistration() -> CellRegistration {
-        CellRegistration { [weak self] cell, _, item in
-            guard let self = self else { return }
-            switch item {
-            case .biography(let model):
-                cell.contentConfiguration = setupBiographyContentConfiguration(for: model)
-            case .episodes(let model):
-                cell.contentConfiguration = setupEpisodesContentConfiguration(for: model)
+            CellRegistration { [weak self] cell, _, item in
+                guard let self = self else { return }
+                switch item {
+                case .biography(let model):
+                    cell.contentConfiguration = setupBiographyContentConfiguration(for: model)
+                case .episodes(let model):
+                    var configuration = self.setupEpisodesContentConfiguration(for: model)
+                    configuration.onButtonTap = {
+                        self.onEpisodeTap?(model.name)
+                    }
+                    cell.contentConfiguration = configuration
+                }
             }
         }
-    }
 
     func setupBiographyContentConfiguration(for item: BiographyModel) -> BiographyContentConfiguration {
         return BiographyContentConfiguration(model: item)
