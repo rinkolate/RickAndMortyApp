@@ -238,7 +238,7 @@ final class BiographyContentView: UIView, UIContentView {
 
             // Info section
             infoTitleLabel.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 24),
-            infoTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            infoTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
 
             infoContainer.topAnchor.constraint(equalTo: infoTitleLabel.bottomAnchor, constant: 12),
 			infoContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -262,7 +262,7 @@ final class BiographyContentView: UIView, UIContentView {
 
             // Origin section
             originTitleLabel.topAnchor.constraint(equalTo: infoContainer.bottomAnchor, constant: 24),
-            originTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            originTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
 
             originContainer.topAnchor.constraint(equalTo: originTitleLabel.bottomAnchor, constant: 12),
 			originContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
